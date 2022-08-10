@@ -11,9 +11,9 @@ import models.Product;
  *
  * @author alex2
  */
-public class LocalProductRepository implements ProductRepository {
+public class InMemoryProductRepository implements ProductRepository {
 
-    public LocalProductRepository(List<Product> data) {
+    public InMemoryProductRepository(List<Product> data) {
         this.data = data;
     }
     
