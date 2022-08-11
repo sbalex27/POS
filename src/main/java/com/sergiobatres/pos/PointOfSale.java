@@ -4,17 +4,30 @@
  */
 package com.sergiobatres.pos;
 
+import java.awt.HeadlessException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import models.Product;
+import repositories.InMemoryProductRepository;
+import repositories.ProductRepository;
+
 /**
  *
  * @author alex2
  */
 public class PointOfSale extends javax.swing.JFrame {
 
+    private final ProductRepository productRepository;
+
     /**
      * Creates new form PointOfSale
+     *
+     * @param productRepository
      */
-    public PointOfSale() {
+    public PointOfSale(ProductRepository productRepository) {
         initComponents();
+        this.productRepository = productRepository;
     }
 
     /**
@@ -26,51 +39,53 @@ public class PointOfSale extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        panelHeader = new javax.swing.JPanel();
+        labelCode = new javax.swing.JLabel();
+        textCode = new javax.swing.JTextField();
+        buttonAdd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableProducts = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelHeader.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel1.setText("Código:");
+        labelCode.setText("Código:");
 
-        jButton1.setText("Agregar");
+        buttonAdd.setText("Agregar");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
+        panelHeader.setLayout(panelHeaderLayout);
+        panelHeaderLayout.setHorizontalGroup(
+            panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(labelCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1)
+                .addComponent(textCode)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(buttonAdd)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        panelHeaderLayout.setVerticalGroup(
+            panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCode)
+                    .addComponent(buttonAdd))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nombre", "Precio", "Código de Barras"
@@ -91,13 +106,13 @@ public class PointOfSale extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableProducts);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
@@ -106,7 +121,7 @@ public class PointOfSale extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addContainerGap())
@@ -115,6 +130,33 @@ public class PointOfSale extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // Parse the user input text
+        int query = Integer.parseInt(textCode.getText());
+        
+        // Find the product in the repository
+        Product product = productRepository.get(query);
+        
+        addProductToTable(product);
+        
+        // Reset the text box input value
+        textCode.setText("");
+        textCode.requestFocus();
+    }//GEN-LAST:event_buttonAddActionPerformed
+
+    private void addProductToTable(Product product) {
+        Object[] row = new Object[]{
+            product.getCode(), 
+            product.getName(), 
+            product.getPrice(), 
+            product.getCodeBar()
+        };
+        
+        DefaultTableModel model = (DefaultTableModel)tableProducts.getModel();
+        
+        model.addRow(row);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -145,17 +187,23 @@ public class PointOfSale extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PointOfSale().setVisible(true);
+                List<Product> seedData = new ArrayList<Product>();
+                seedData.add(new Product(1, "P1", "Lámpara de Pie", 150.00, "AA1"));
+                seedData.add(new Product(2, "P2", "Mouse", 500.00, "BB2"));
+                seedData.add(new Product(3, "P3", "Teclado", 489.99, "CC3"));
+
+                ProductRepository productsRepository = new InMemoryProductRepository(seedData);
+                new PointOfSale(productsRepository).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton buttonAdd;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel labelCode;
+    private javax.swing.JPanel panelHeader;
+    private javax.swing.JTable tableProducts;
+    private javax.swing.JTextField textCode;
     // End of variables declaration//GEN-END:variables
 }
