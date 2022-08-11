@@ -5,6 +5,7 @@
 package repositories;
 
 import java.util.List;
+import java.util.Optional;
 import models.Customer;
 
 /**
@@ -15,16 +16,10 @@ public interface CustomerRepository {
     
     /**
      * Show the specified resource
-     * @param id
-     * @return the customer with the same id
+     * @param nit
+     * @return the customer with the first nit founded
      */
-    Customer get(int id);
-    
-    /**
-     * Index a list of customers
-     * @return all the customers in a list
-     */
-    List<Customer> index();
+    Optional<Customer> get(String nit);
     
     /**
      * Store a new customer

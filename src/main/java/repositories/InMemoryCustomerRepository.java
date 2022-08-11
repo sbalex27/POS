@@ -5,6 +5,7 @@
 package repositories;
 
 import java.util.List;
+import java.util.Optional;
 import models.Customer;
 
 /**
@@ -19,18 +20,12 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     }
     
     @Override
-    public Customer get(int id) {
+    public Optional<Customer> get(String nit) {
         return data.stream()
-                .filter(customer -> customer.getId() == id)
-                .findFirst()
-                .orElseThrow();
+                .filter(customer -> customer.getNit().equals(nit))
+                .findFirst();
     }
-
-    @Override
-    public List<Customer> index() {
-        return data;
-    }
-
+    
     @Override
     public Customer store(Customer customer) {
         data.add(customer);

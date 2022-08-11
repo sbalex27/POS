@@ -43,6 +43,7 @@ public class PointOfSale extends javax.swing.JFrame {
         labelCode = new javax.swing.JLabel();
         textCode = new javax.swing.JTextField();
         buttonAdd = new javax.swing.JButton();
+        buttonPay = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProducts = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -64,6 +65,13 @@ public class PointOfSale extends javax.swing.JFrame {
             }
         });
 
+        buttonPay.setText("Pagar");
+        buttonPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
         panelHeader.setLayout(panelHeaderLayout);
         panelHeaderLayout.setHorizontalGroup(
@@ -73,8 +81,10 @@ public class PointOfSale extends javax.swing.JFrame {
                 .addComponent(labelCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(textCode)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonPay)
                 .addContainerGap())
         );
         panelHeaderLayout.setVerticalGroup(
@@ -84,7 +94,8 @@ public class PointOfSale extends javax.swing.JFrame {
                 .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCode)
-                    .addComponent(buttonAdd))
+                    .addComponent(buttonAdd)
+                    .addComponent(buttonPay))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -161,7 +172,7 @@ public class PointOfSale extends javax.swing.JFrame {
             .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -194,6 +205,17 @@ public class PointOfSale extends javax.swing.JFrame {
         textCode.requestFocus();
     }//GEN-LAST:event_buttonAddActionPerformed
 
+    private void buttonPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPayActionPerformed
+        reset();
+    }//GEN-LAST:event_buttonPayActionPerformed
+
+    private void reset()
+    {
+        labelQuantity.setText("0");
+        labelTotal.setText("0");
+        DefaultTableModel model = (DefaultTableModel)tableProducts.getModel();
+        model.setRowCount(0);
+    }
     private void sumQuantity()
     {
         var current = Integer.parseInt(labelQuantity.getText());
@@ -262,6 +284,7 @@ public class PointOfSale extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonPay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCode;
