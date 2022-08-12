@@ -10,7 +10,7 @@ import models.Customer;
 
 /**
  *
- * @author alex2
+ * @author YYJCS
  */
 public interface CustomerRepository {
     

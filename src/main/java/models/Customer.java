@@ -12,7 +12,13 @@ public class Customer {
     private int id;
     private String nit;
     private String name;
-
+    
+    public Customer(String nit, String name)
+    {
+        this.nit = nit;
+        this.name = name;
+    }
+    
     public Customer(int id, String nit, String name) {
         this.id = id;
         this.nit = nit;
