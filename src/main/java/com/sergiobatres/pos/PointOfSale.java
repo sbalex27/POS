@@ -15,9 +15,11 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import models.Customer;
 import models.Product;
+import repositories.CustomerRepository;
 import repositories.InMemoryCustomerRepository;
 import repositories.InMemoryProductRepository;
 import repositories.ProductRepository;
+import repositories.SqlCustomerRepository;
 import repositories.SqlProductRepository;
 
 /**
@@ -27,15 +29,17 @@ import repositories.SqlProductRepository;
 public class PointOfSale extends javax.swing.JFrame {
 
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
     /**
      * Creates new form PointOfSale
      *
      * @param productRepository
      */
-    public PointOfSale(ProductRepository productRepository) {
+    public PointOfSale(ProductRepository productRepository, CustomerRepository customerRepository) {
         initComponents();
         this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
     }
 
     /**
@@ -234,11 +238,7 @@ public class PointOfSale extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void buttonPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPayActionPerformed
-        List<Customer> data = new ArrayList<>();
-        data.add(new Customer(1, "1234567-8", "Sergio Batres"));
-        data.add(new Customer(2, "8765432-1", "Ana María"));
-
-        Payment payment = new Payment(new InMemoryCustomerRepository(data), Double.parseDouble(labelTotal.getText()));
+        Payment payment = new Payment(this.customerRepository, Double.parseDouble(labelTotal.getText()));
         reset();
         payment.setVisible(true);
     }//GEN-LAST:event_buttonPayActionPerformed
@@ -306,7 +306,10 @@ public class PointOfSale extends javax.swing.JFrame {
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
                     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pos", "root", "");
-                    new PointOfSale(new SqlProductRepository(connection)).setVisible(true);
+                    new PointOfSale(
+                            new SqlProductRepository(connection),
+                            new SqlCustomerRepository(connection)
+                    ).setVisible(true);
                 } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(SqlProductRepository.class.getName()).log(Level.SEVERE, null, ex);
                 }
