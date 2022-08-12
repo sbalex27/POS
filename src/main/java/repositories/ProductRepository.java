@@ -18,10 +18,4 @@ public interface ProductRepository {
      * @return a product resource
      */
     Product get(int id);
-    
-    /**
-     * Search all the products in the repository
-     * @return a list of products
-     */
-    List<Product> index();
 }

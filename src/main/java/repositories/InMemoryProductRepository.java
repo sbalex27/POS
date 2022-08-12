@@ -26,9 +26,4 @@ public class InMemoryProductRepository implements ProductRepository {
                 .findFirst()
                 .orElseThrow();
     }
-
-    @Override
-    public List<Product> index() {
-        return data;
-    }
 }

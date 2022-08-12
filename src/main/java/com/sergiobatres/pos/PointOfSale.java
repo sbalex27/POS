@@ -13,6 +13,7 @@ import models.Product;
 import repositories.InMemoryCustomerRepository;
 import repositories.InMemoryProductRepository;
 import repositories.ProductRepository;
+import repositories.SqlProductRepository;
 
 /**
  *
@@ -302,7 +303,7 @@ public class PointOfSale extends javax.swing.JFrame {
                 seedData.add(new Product(2, "P2", "Mouse", 500.00, "BB2"));
                 seedData.add(new Product(3, "P3", "Teclado", 489.99, "CC3"));
 
-                ProductRepository productsRepository = new InMemoryProductRepository(seedData);
+                ProductRepository productsRepository = new SqlProductRepository();
                 new PointOfSale(productsRepository).setVisible(true);
             }
         });
