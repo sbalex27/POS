@@ -21,17 +21,10 @@ import models.Product;
  */
 public class SqlProductRepository implements ProductRepository {
 
-    private Connection connection;
+    private final Connection connection;
 
-    public SqlProductRepository() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pos", "root", "");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SqlProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SqlProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public SqlProductRepository(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
