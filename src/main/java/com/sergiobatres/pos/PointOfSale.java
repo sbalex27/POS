@@ -8,7 +8,9 @@ import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import models.Customer;
 import models.Product;
+import repositories.InMemoryCustomerRepository;
 import repositories.InMemoryProductRepository;
 import repositories.ProductRepository;
 
@@ -192,55 +194,59 @@ public class PointOfSale extends javax.swing.JFrame {
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         // Parse the user input text
         int query = Integer.parseInt(textCode.getText());
-        
+
         // Find the product in the repository
         Product product = productRepository.get(query);
-        
+
         addProductToTable(product);
         sumQuantity();
         sumTotal(product.getPrice());
-        
+
         // Reset the text box input value
         textCode.setText("");
         textCode.requestFocus();
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void buttonPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPayActionPerformed
+        List<Customer> data = new ArrayList<Customer>();
+        data.add(new Customer(1, "1234567-8", "Sergio Batres"));
+        data.add(new Customer(2, "8765432-1", "Ana María"));
+
+        Payment payment = new Payment(new InMemoryCustomerRepository(data), Double.parseDouble(labelTotal.getText()));
         reset();
+        payment.setVisible(true);
     }//GEN-LAST:event_buttonPayActionPerformed
 
-    private void reset()
-    {
+    private void reset() {
         labelQuantity.setText("0");
         labelTotal.setText("0");
-        DefaultTableModel model = (DefaultTableModel)tableProducts.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableProducts.getModel();
         model.setRowCount(0);
     }
-    private void sumQuantity()
-    {
+
+    private void sumQuantity() {
         var current = Integer.parseInt(labelQuantity.getText());
         labelQuantity.setText(Integer.toString(++current));
     }
-    
-    private void sumTotal(double value)
-    {
+
+    private void sumTotal(double value) {
         double current = Double.parseDouble(labelTotal.getText());
         labelTotal.setText(Double.toString(current + value));
     }
-    
+
     private void addProductToTable(Product product) {
         Object[] row = new Object[]{
-            product.getCode(), 
-            product.getName(), 
-            product.getPrice(), 
+            product.getCode(),
+            product.getName(),
+            product.getPrice(),
             product.getCodeBar()
         };
-        
-        DefaultTableModel model = (DefaultTableModel)tableProducts.getModel();
-        
+
+        DefaultTableModel model = (DefaultTableModel) tableProducts.getModel();
+
         model.addRow(row);
     }
-    
+
     /**
      * @param args the command line arguments
      */
