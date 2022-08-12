@@ -222,11 +222,8 @@ public class PointOfSale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        // Parse the user input text
-        int query = Integer.parseInt(textCode.getText());
-
         // Find the product in the repository
-        Product product = productRepository.get(query);
+        Product product = productRepository.get(textCode.getText());
 
         addProductToTable(product);
         sumQuantity();

@@ -53,7 +53,7 @@ public class SqlCustomerRepository implements CustomerRepository {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, customer.getNit());
             statement.setString(2, customer.getName());
-            statement.executeQuery();
+            statement.executeUpdate();
             return customer;
             
         } catch (SQLException ex) {

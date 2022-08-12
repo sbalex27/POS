@@ -14,8 +14,8 @@ import models.Product;
 public interface ProductRepository {
     /**
      * Find an specific product resource
-     * @param id
+     * @param query
      * @return a product resource
      */
-    Product get(int id);
+    Product get(String query);
 }

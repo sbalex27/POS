@@ -28,14 +28,17 @@ public class SqlProductRepository implements ProductRepository {
     }
 
     @Override
-    public Product get(int id) {
+    public Product get(String query) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM productos where ID = ? LIMIT 1");
-            statement.setInt(1, id);
+            String sql = "SELECT * FROM productos WHERE CODIGO = ? OR NOMBRE = ? OR CODBARRAS = ? LIMIT 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, query);
+            statement.setString(2, query);
+            statement.setString(3, query);
             ResultSet resultSet = statement.executeQuery();
-            
+
             resultSet.next();
-            
+
             return new Product(
                     resultSet.getInt("id"),
                     resultSet.getString("codigo"),

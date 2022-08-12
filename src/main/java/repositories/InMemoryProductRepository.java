@@ -20,9 +20,9 @@ public class InMemoryProductRepository implements ProductRepository {
     private final List<Product> data;
     
     @Override
-    public Product get(int id) {
+    public Product get(String query) {
         return data.stream()
-                .filter(product -> product.getId() == id)
+                .filter(product -> product.getCode().equals(query))
                 .findFirst()
                 .orElseThrow();
     }

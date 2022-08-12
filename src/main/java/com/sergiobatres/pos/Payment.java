@@ -239,6 +239,8 @@ public class Payment extends javax.swing.JFrame {
         if (customer.isEmpty()) {
             customerRepository.store(new Customer(textNit.getText(), textName.getText()));
         }
+        
+        this.dispose();
     }//GEN-LAST:event_buttonPayActionPerformed
 
     /**
